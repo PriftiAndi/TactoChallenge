@@ -1,7 +1,7 @@
 import { OrganizationTableRow } from '@/modules/organization_overview/helpers/hooks';
 import React from 'react';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Badge, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 
 interface OrganizationTableProps {
   rows: Array<OrganizationTableRow>;
@@ -16,6 +16,11 @@ const OrganizationTable: React.FC<OrganizationTableProps> = ({ rows }) => {
             <TableCell component="th">ID</TableCell>
             <TableCell component="th">Name</TableCell>
             <TableCell component="th"># Users</TableCell>
+            <TableCell component="th">Contact Person</TableCell>
+            <TableCell component="th"># Articles</TableCell>
+            <TableCell component="th" align="center">
+              Status
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -24,6 +29,15 @@ const OrganizationTable: React.FC<OrganizationTableProps> = ({ rows }) => {
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.numberOfUsers}</TableCell>
+              <TableCell>{row.managerContact}</TableCell>
+              <TableCell>{row.numberOfArticles}</TableCell>
+              <TableCell align="center">
+                {!row.articleStatusIfApplicable.includes('undefined') && (
+                  <Tooltip title={row.articleStatusIfApplicable}>
+                    <Badge badgeContent="Article" color="error" />
+                  </Tooltip>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

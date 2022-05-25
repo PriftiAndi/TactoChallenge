@@ -6,12 +6,16 @@ import { useStore } from '@/store';
 import { default as React, useEffect } from 'react';
 
 const App: React.FC = () => {
-  const rows = useOrganizationTable();
   const { fetchOrganizations } = useStore(({ fetchOrganizations }) => ({ fetchOrganizations }));
+  const { fetchDepartments } = useStore(({ fetchDepartments }) => ({ fetchDepartments }));
+  const { fetchUsers } = useStore(({ fetchUsers }) => ({ fetchUsers }));
+  const { fetchArticles } = useStore(({ fetchArticles }) => ({ fetchArticles }));
+
+  const rows = useOrganizationTable();
 
   useEffect(() => {
     ApiHandler.init();
-    fetchOrganizations();
+    Promise.allSettled([fetchOrganizations(), fetchUsers(), fetchDepartments(), fetchArticles()]);
   }, []);
 
   return (
